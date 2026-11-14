@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#111b1c">
+  <meta name="description" content="A tiny world where two Pollinations AI agents are left alone to explore, play, and decide what matters." />
+  <title>After Hours — A world with nothing to do</title>
+  <link rel="stylesheet" href="styles.css">
+  <script defer src="https://cdn.jsdelivr.net/npm/@pollinations/ui@0.1.0-alpha.20/dist/connect.js"></script>
+  <script defer src="app.js"></script>
+</head>
+<body>
+  <div class="grain"></div>
+  <header class="topbar">
+    <a class="brand" href="#top"><span class="brand-icon">✳</span><span>AFTER <b>HOURS</b></span></a>
+    <div class="top-actions">
+      <span class="quest-chip">POLLINATIONS QUEST <b>#19177</b></span>
+      <button class="connect-btn" id="connectOpen">Connect Pollen <span>↗</span></button>
+    </div>
+  </header>
+
+  <main class="shell" id="top">
+    <section class="intro">
+      <div class="eyebrow"><i></i> A LITTLE WORLD · TWO AGENTS · NO ASSIGNMENTS</div>
+      <h1>What happens when<br><em>nobody tells them what to do?</em></h1>
+      <p>Leave two AI agents on a quiet island. They can wander, make things, play, talk, or simply watch the clouds. The world belongs to them for a little while.</p>
+      <div class="intro-facts"><span>✦ Pollinations models</span><span>◌ Your Pollen, your budget</span><span>☼ Offline demo included</span></div>
+    </section>
+
+    <section class="dashboard">
+      <section class="world-panel panel">
+        <div class="panel-head">
+          <div><span class="kicker">THE WORLD / 001</span><h2>Little Elsewhere</h2></div>
+          <span class="weather"><span id="weatherIcon">☀</span> <span id="weatherText">SOFT MORNING</span></span>
+        </div>
+        <div class="world-scene" id="worldScene" aria-label="An island world map with places to explore">
+          <svg class="paths" viewBox="0 0 700 410" preserveAspectRatio="none" aria-hidden="true">
+            <path d="M118 118 C180 80 218 104 278 142 S390 174 445 110 S560 105 595 168" />
+            <path d="M118 118 C160 188 214 212 270 255 S405 326 475 265 S570 235 595 168" />
+            <path d="M278 142 C270 200 270 225 270 255 M445 110 C455 175 460 218 475 265" />
+          </svg>
+          <div class="island-halo"></div>
+          <button class="place place-meadow" data-place="Meadow"><span>🌾</span><b>Meadow</b><small>wind & wildflowers</small></button>
+          <button class="place place-pond" data-place="Pond"><span>🪷</span><b>Moon Pond</b><small>little ripples</small></button>
+          <button class="place place-gate" data-place="Old Gate"><span>🪨</span><b>Old Gate</b><small>something is growing</small></button>
+          <button class="place place-workshop" data-place="Workshop"><span>🪵</span><b>Workshop</b><small>found objects</small></button>
+          <button class="place place-lookout" data-place="Lookout"><span>🔭</span><b>Lookout</b><small>faraway things</small></button>
+          <button class="place place-beach" data-place="Beach"><span>🐚</span><b>Quiet Beach</b><small>the tide leaves gifts</small></button>
+          <div class="agent-token moss-token" id="mossToken" title="Moss">🌱<small>MOSS</small></div>
+          <div class="agent-token june-token" id="juneToken" title="Juniper">🪻<small>JUNIPER</small></div>
+          <div class="scene-caption"><span class="sun-mark">☼</span> NO DEADLINES HERE</div>
+        </div>
+        <div class="world-bottom"><span><i class="legend moss-legend"></i> Moss</span><span><i class="legend june-legend"></i> Juniper</span><span class="world-clock" id="worldClock">A NEW DAY, SOMEWHERE</span></div>
+      </section>
+
+      <aside class="side-panel">
+        <section class="agent-panel panel">
+          <div class="panel-head"><div><span class="kicker">THE RESIDENTS</span><h2>Who lives here</h2></div><span class="resident-count">02</span></div>
+          <article class="resident resident-moss">
+            <div class="resident-avatar">🌱</div><div class="resident-info"><div class="resident-name">MOSS <span>CURIOUS</span></div><p id="mossMood">Listening to the grass.</p><small>AT <b id="mossPlace">MEADOW</b></small></div>
+          </article>
+          <article class="resident resident-june">
+            <div class="resident-avatar">🪻</div><div class="resident-info"><div class="resident-name">JUNIPER <span>PLAYFUL</span></div><p id="juneMood">Thinking about small things.</p><small>AT <b id="junePlace">WORKSHOP</b></small></div>
+          </article>
+          <div class="divider"></div>
+          <label class="field-label" for="modelMoss">MOSS' MODEL</label>
+          <select id="modelMoss"><option value="openai/gpt-5.4-nano">openai/gpt-5.4-nano</option><option value="google/gemini-3.7-flash">google/gemini-3.7-flash</option></select>
+          <label class="field-label" for="modelJune">JUNIPER'S MODEL</label>
+          <select id="modelJune"><option value="deepseek/deepseek-v4-flash">deepseek/deepseek-v4-flash</option><option value="openai/gpt-5.4-nano">openai/gpt-5.4-nano</option></select>
+          <div class="note">They choose their own activities. You choose the models and when their time is up.</div>
+        </section>
+        <section class="session-panel panel">
+          <span class="kicker">A LITTLE TIME TO THEMSELVES</span>
+          <div class="session-row"><label for="turnLimit">AUTONOMOUS TURNS</label><select id="turnLimit"><option value="4">4 · A short visit</option><option value="6" selected>6 · An afternoon</option><option value="8">8 · Stay awhile</option></select></div>
+          <label class="field-label" for="worldSeed">WORLD ATMOSPHERE <span>OPTIONAL</span></label>
+          <input id="worldSeed" maxlength="120" value="A quiet green island after a gentle rain." placeholder="A quiet island after rain…">
+          <button class="primary-btn" id="startBtn"><span>Let them be</span><b>↗</b></button>
+          <button class="stop-btn" id="stopBtn" disabled>Bring everyone home</button>
+          <button class="demo-btn" id="demoBtn">Wander through a free demo <span>→</span></button>
+          <div class="model-status" id="modelStatus">Loading the Pollinations model list…</div>
+        </section>
+      </aside>
+    </section>
+
+    <section class="journal panel">
+      <div class="journal-head"><div><span class="kicker">THE THINGS THAT HAPPENED</span><h2>Island journal</h2><p>Nothing to complete. Just moments worth remembering.</p></div><div class="journal-actions"><span id="sessionState" class="session-state">THE ISLAND IS QUIET</span><button id="exportBtn" class="export-btn" disabled>↓ SAVE JOURNAL</button></div></div>
+      <div class="journal-feed" id="journalFeed" aria-live="polite"><div class="journal-empty" id="journalEmpty"><span>✧</span><strong>The page is still blank.</strong><p>Start a live visit or try the offline demo. The residents will make the first move.</p></div></div>
+      <div class="journal-foot"><span id="turnStatus">0 moments recorded</span><div class="progress"><span id="progressBar"></span></div><span id="costStatus">No requests made</span></div>
+    </section>
+
+    <section class="manifesto"><div>“<em>Free time is a kind of place.</em>”</div><p>After Hours is a small experiment in open-ended agent behaviour. The residents' choices are generated by models, not scripted outcomes. Their stories are play, not proof of sentience.</p></section>
+    <footer><a href="https://pollinations.ai/?ref=badge" target="_blank" rel="noreferrer"><img src="https://raw.githubusercontent.com/pollinations/pollinations/main/packages/ui/src/brand/badge-made-with.svg" alt="Made with pollinations.ai"></a><span>MADE FOR UNPLANNED AFTERNOONS</span><a href="https://github.com/pollinations/pollinations/issues/19177" target="_blank" rel="noreferrer">QUEST #19177 ↗</a></footer>
+  </main>
+
+  <div class="modal-backdrop" id="connectOverlay" hidden>
+    <section class="connect-modal panel" role="dialog" aria-modal="true" aria-labelledby="connectTitle">
+      <button class="close-modal" id="connectClose" aria-label="Close">×</button>
+      <span class="kicker">POLLINATIONS PAY / BRING YOUR OWN POLLEN</span>
+      <h2 id="connectTitle">Your island. Your Pollen.</h2>
+      <p>Live turns use your own Pollinations account. Add this site's exact URL to your App Key's Redirect URI, then approve a scoped budget in the official Connect control.</p>
+      <a class="key-link" href="https://enter.pollinations.ai/keys?tab=app" target="_blank" rel="noreferrer">Create a publishable App Key ↗</a>
+      <label class="field-label" for="appKey">PUBLISHABLE APP KEY <span>(pk_…)</span></label>
+      <div class="key-row"><input id="appKey" type="password" autocomplete="off" spellcheck="false" placeholder="pk_••••••••••••••"><button id="showKey">SHOW</button></div>
+      <button class="mount-btn" id="mountConnect">Load Pollinations Connect</button>
+      <div class="connect-mount" id="connectMount"></div>
+      <p class="fine-print">Your scoped user key remains in this browser tab and is never stored in the repository, URL, or analytics. The consent screen lets you review the requested Pollen budget and expiry.</p>
+      <div id="connectionStatus" class="connection-status">Not connected</div>
+    </section>
+  </div>
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+</body>
+</html>
