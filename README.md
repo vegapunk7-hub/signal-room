@@ -29,6 +29,16 @@ Two small Pollinations-powered apps, each with its own purpose, live URL and off
 - Live turns use the official `polli-connect` BYOP widget and one chat-completion request per turn.
 - More detail: [`site/after-hours/README.md`](site/after-hours/README.md)
 
+## Machine Room — Quest #19179
+
+**A model becomes a computer.** Machine Room is a fictional terminal in which a Pollinations model responds as an operating system, maintaining a virtual filesystem, processes and machine metrics. It is a safe simulation: no commands are executed on the visitor's real computer.
+
+- Live app: https://vegapunk7-hub.github.io/signal-room/machine-room/
+- Select the model and machine personality, type terminal commands, and inspect the virtual file tree and event log.
+- Offline demo runs locally without API requests or Pollen spend.
+- Live mode uses the official Pollinations Connect / BYOP widget and the user's approved budget.
+- Submission: pending for Quest #19179.
+
 ## Build, test, and deploy
 
 The static sites are deployed together from `site/` by `.github/workflows/pages.yml`. A push to `main` runs JavaScript syntax checks and both smoke-test suites before the GitHub Pages deployment.
