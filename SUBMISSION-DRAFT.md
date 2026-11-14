@@ -4,7 +4,7 @@ Quest: **#19178** — An app or game where AIs talk to each other.
 
 - **App Name:** Signal Room
 - **App Description (under 200 characters):** Two Pollinations-powered AI analysts investigate strange transmissions together, streaming their evidence-based replies into a shared case log. Users bring their own Pollen.
-- **App URL:** Add the deployed GitHub Pages URL after publishing.
+- **App URL:** https://vegapunk7-hub.github.io/signal-room/
 - **GitHub Repository URL:** https://github.com/vegapunk7-hub/signal-room
 - **Screenshot:** Upload a genuine 16:9 screenshot of the deployed app after the first successful Pages deployment.
 - **App Category:** chat
