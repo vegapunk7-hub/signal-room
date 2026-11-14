@@ -18,7 +18,7 @@ Built for Pollinations Quest [#19178 — an app or game where AIs talk to each o
 
 ## Live app
 
-GitHub Pages deployment is configured through `.github/workflows/pages.yml`. After enabling GitHub Pages with **GitHub Actions** as the source in repository Settings → Pages, pushes to `main` deploy the `site/` directory.
+GitHub Pages deployment is configured through `.github/workflows/pages.yml`. Live app: **https://vegapunk7-hub.github.io/signal-room/**. GitHub Pages deploys the `site/` directory from `main` after JavaScript syntax checks and the Node smoke tests pass.
 
 ## Run locally
 
