@@ -1,4 +1,4 @@
-name: Deploy Signal Room to GitHub Pages
+name: Deploy Signal Room and After Hours to GitHub Pages
 
 on:
   push:
@@ -25,9 +25,11 @@ jobs:
         with:
           node-version: 22
       - name: Check JavaScript syntax
-        run: node --check site/app.js
+        run: |
+          node --check site/app.js
+          node --check site/after-hours/app.js
       - name: Run smoke tests
-        run: node --test tests/smoke.test.js
+        run: node --test tests/smoke.test.js tests/after-hours.test.js
 
   deploy:
     needs: test
