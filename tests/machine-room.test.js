@@ -15,7 +15,7 @@ test("Machine Room DOM IDs are unique and every script reference exists", () => 
 test("inline application JavaScript parses successfully", () => {
   const scripts = [...html.matchAll(/<script>([\s\S]*?)<\/script>/g)];
   assert.ok(scripts.length >= 1, "Inline app script must exist");
-  assert.doesNotThrow(() => new vm.Script(scripts.at(-1)[1]));
+  try { new vm.Script(scripts.at(-1)[1], { filename: "machine-room-inline.js" }); } catch (error) { throw new Error(error.stack); }
 });
 
 test("live mode uses Pollinations and the official BYOP Connect widget", () => {
