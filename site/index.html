@@ -8,7 +8,6 @@
   <title>Signal Room — A cooperative AI investigation</title>
   <link rel="icon" href="assets/signal.svg" type="image/svg+xml">
   <link rel="stylesheet" href="styles.css">
-  <script defer src="https://cdn.jsdelivr.net/npm/@pollinations/ui@0.1.0-alpha.20/dist/connect.js"></script>
   <script defer src="app.js"></script>
 </head>
 <body>
@@ -118,14 +117,9 @@
       <button class="modal-close" id="connectClose" type="button" aria-label="Close">×</button>
       <span class="section-kicker">POLLINATIONS PAY · BYOP</span>
       <h2 id="connectTitle">Bring your own Pollen.</h2>
-      <p class="modal-copy">Signal Room never asks for a secret key. Create a publishable App Key, then approve a scoped key for your own account using the official Pollinations Connect control.</p>
-      <a class="key-link" href="https://enter.pollinations.ai/keys?tab=app" target="_blank" rel="noreferrer">Create an App Key at enter.pollinations.ai ↗</a>
-      <label class="field-label" for="appKey">YOUR PUBLISHABLE APP KEY <span>(pk_…)</span></label>
-      <div class="key-input-row"><input id="appKey" type="password" autocomplete="off" spellcheck="false" placeholder="pk_••••••••••••••••"><button id="showKey" type="button" aria-label="Show app key">SHOW</button></div>
-      <button class="secondary-button" id="mountConnect" type="button">Load Pollinations Connect</button>
-      <div id="connectMount" class="connect-mount"></div>
-      <p class="redirect-note">Before connecting, add your deployed app URL as an exact Redirect URI on the App Key. The Connect consent screen lets you set your own Pollen budget and expiry.</p>
-      <div class="privacy-note"><span>◇</span> Your scoped key stays in this browser tab through the official widget. It is never written into this project, its URL, or analytics.</div>
+      <p class="modal-copy">Signal Room never asks for a secret key. Sign in with Pollinations and approve a scoped key for your own account. The consent screen lets you set your own Pollen budget and expiry.</p>
+      <button class="secondary-button" id="signIn" type="button">Sign in with Pollinations</button>
+      <div class="privacy-note"><span>◇</span> Your scoped key stays in this browser tab. It is never written into this project, its URL, or analytics.</div>
       <div id="connectionStatus" class="connection-status">Not connected</div>
     </div>
   </div>

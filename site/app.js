@@ -1,5 +1,11 @@
 const API = "https://gen.pollinations.ai/v1/chat/completions";
 const MODELS_API = "https://gen.pollinations.ai/v1/models";
+const ENTER = "https://enter.pollinations.ai";
+// Optional: your own App Key (pk_...) from enter.pollinations.ai/keys, with this
+// page's URL as a redirect URI. It names the app on the sign-in screen and lets
+// you turn on developer earnings. Sign-in works without it.
+const APP_KEY = "";
+const KEY_STORE = "signal-room-key";
 const FALLBACK_MODELS = [
   "openai/gpt-5.4-nano",
   "deepseek/deepseek-v4-flash",
@@ -18,7 +24,7 @@ const DEMO = [
   { who: "VEGA", role: "SYSTEMS THINKER", model: "OFFLINE CASE FILE", text: "I would add a safety condition: do not send a person to the coordinates until we know whether the signal is synchronized with the lighthouse or merely routed through it.\n\nOur strongest working theory is a two-way system that has only now produced a human-readable response. Confidence is low-to-medium; the physical source is unknown. Next evidence: direction of arrival, waveform changes, and whether the reply changes when the lighthouse lamp is covered.\n\nThe mystery is not solved yet, but we have a testable plan rather than a story we invented around one sentence.", latency: "DEMO" },
 ];
 const $ = (id) => document.getElementById(id);
-const state = { apiKey: null, connectElement: null, running: false, controller: null, turns: [], totalMs: 0, startedAt: 0, caseNumber: 0, toastTimer: null, selectedModels: new Set(FALLBACK_MODELS) };
+const state = { apiKey: sessionStorage.getItem(KEY_STORE), running: false, controller: null, turns: [], totalMs: 0, startedAt: 0, caseNumber: 0, toastTimer: null, selectedModels: new Set(FALLBACK_MODELS) };
 
 function toast(message) {
   const el = $("toast");
@@ -267,33 +273,24 @@ function exportTranscript() {
   a.href = url; a.download = `signal-room-case-${String(state.caseNumber).padStart(3, "0")}.md`;
   document.body.append(a); a.click(); a.remove(); URL.revokeObjectURL(url);
 }
-function openConnect() { $("connectOverlay").hidden = false; $("appKey").focus(); }
+function openConnect() { $("connectOverlay").hidden = false; $("signIn").focus(); }
 function closeConnect() { $("connectOverlay").hidden = true; }
-async function mountConnect() {
-  const key = $("appKey").value.trim();
-  if (!/^pk_[A-Za-z0-9_-]+$/.test(key)) { toast("Enter a valid publishable App Key beginning with pk_."); return; }
-  sessionStorage.setItem("signal-room-app-key", key);
-  const mount = $("connectMount");
-  if (!state.connectElement) {
-    state.connectElement = document.createElement("polli-connect");
-    state.connectElement.setAttribute("budget", "5");
-    state.connectElement.setAttribute("expiry", "7");
-    state.connectElement.setAttribute("models", "text");
-    state.connectElement.setAttribute("app-key", key);
-    state.connectElement.addEventListener("change", () => {
-      state.apiKey = state.connectElement.apiKey || null;
-      updateConnectionStatus();
-      if (state.apiKey) toast("Pollinations connected. Live investigations are ready.");
-    });
-    mount.replaceChildren(state.connectElement);
-  } else {
-    state.connectElement.setAttribute("app-key", key);
-  }
-  await customElements.whenDefined("polli-connect");
-  setTimeout(() => {
-    state.apiKey = state.connectElement?.apiKey || state.apiKey;
-    updateConnectionStatus();
-  }, 250);
+// Pollinations asks the visitor to approve this app, then sends them back with
+// a key for their own Pollen in the URL fragment: #api_key=sk_...
+function signIn() {
+  const params = new URLSearchParams({ redirect_uri: location.origin + location.pathname, models: "text" });
+  if (APP_KEY) params.set("client_id", APP_KEY);
+  location.href = `${ENTER}/authorize?${params}`;
+}
+function readSignInResult() {
+  const hash = new URLSearchParams(location.hash.slice(1));
+  if (!hash.has("api_key") && !hash.has("error")) return;
+  history.replaceState(null, "", location.pathname + location.search);
+  state.apiKey = hash.get("api_key");
+  if (state.apiKey) {
+    sessionStorage.setItem(KEY_STORE, state.apiKey);
+    toast("Pollinations connected. Live investigations are ready.");
+  } else toast("Sign-in was cancelled.");
 }
 function updateConnectionStatus() {
   const status = $("connectionStatus");
@@ -303,7 +300,7 @@ function updateConnectionStatus() {
     status.classList.add("connected");
     top.textContent = "Pollen connected ✓";
   } else {
-    status.textContent = "Not connected · approve access with Pollinations Connect";
+    status.textContent = "Not connected · sign in with Pollinations";
     status.classList.remove("connected");
     top.innerHTML = 'Connect Pollen <span aria-hidden="true">↗</span>';
   }
@@ -347,11 +344,8 @@ function init() {
   $("connectOpen").addEventListener("click", openConnect);
   $("connectClose").addEventListener("click", closeConnect);
   $("connectOverlay").addEventListener("click", (event) => { if (event.target === $("connectOverlay")) closeConnect(); });
-  $("mountConnect").addEventListener("click", mountConnect);
-  $("showKey").addEventListener("click", () => { const input = $("appKey"); input.type = input.type === "password" ? "text" : "password"; $("showKey").textContent = input.type === "password" ? "SHOW" : "HIDE"; });
-  $("appKey").value = sessionStorage.getItem("signal-room-app-key") ?? "";
-  const savedKey = $("appKey").value;
-  if (savedKey) mountConnect();
+  $("signIn").addEventListener("click", signIn);
+  readSignInResult();
   updateConnectionStatus();
   loadModels();
 }

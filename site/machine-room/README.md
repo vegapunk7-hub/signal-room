@@ -23,7 +23,7 @@ https://vegapunk7-hub.github.io/signal-room/machine-room/
 
 The offline demo is entirely local: no Pollinations API requests and no Pollen are used.
 
-For live mode, create a publishable App Key at <https://enter.pollinations.ai/keys?tab=app>, add the exact Machine Room URL as a Redirect URI, then approve a scoped text-model budget through the official Pollinations Connect widget. Each live terminal command makes one chat-completions request.
+For live mode, sign in with Pollinations and approve a scoped text-model budget on the consent screen. Each live terminal command makes one chat-completions request.
 
 ## Safety boundary
 

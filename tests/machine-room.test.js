@@ -18,10 +18,9 @@ test("inline application JavaScript parses successfully", () => {
   try { new vm.Script(scripts.at(-1)[1], { filename: "machine-room-inline.js" }); } catch (error) { throw new Error(error.stack); }
 });
 
-test("live mode uses Pollinations and the official BYOP Connect widget", () => {
+test("live mode uses Pollinations and Pollinations sign-in", () => {
   assert.match(html, /https:\/\/gen\.pollinations\.ai\/v1\/chat\/completions/);
-  assert.match(html, /@pollinations\/ui@0\.1\.0-alpha\.20\/dist\/connect\.js/);
-  assert.match(html, /createElement\("polli-connect"\)/);
+  assert.match(html, /https:\/\/enter\.pollinations\.ai\/authorize\?/);
   assert.match(html, /badge-made-with\.svg/);
 });
 
