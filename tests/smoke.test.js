@@ -13,10 +13,10 @@ test("every JavaScript DOM id reference exists in the page", () => {
     for (const id of referenced) assert.ok(ids.includes(id), `Missing HTML id: ${id}`);
 });
 
-test("app uses Pollinations chat completions and official BYOP widget", () => {
+test("app uses Pollinations chat completions and Pollinations sign-in", () => {
     assert.match(js, /https:\/\/gen\.pollinations\.ai\/v1\/chat\/completions/);
-    assert.match(html, /@pollinations\/ui@0\.1\.0-alpha\.20\/dist\/connect\.js/);
-    assert.match(js, /createElement\("polli-connect"\)/);
+    assert.match(js, /https:\/\/enter\.pollinations\.ai/);
+    assert.match(js, /\/authorize\?/);
 });
 
 test("no-cost demo and safety controls are present", () => {

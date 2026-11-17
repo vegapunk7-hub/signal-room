@@ -36,7 +36,7 @@ Two small Pollinations-powered apps, each with its own purpose, live URL and off
 - Live app: https://vegapunk7-hub.github.io/signal-room/machine-room/
 - Select the model and machine personality, type terminal commands, and inspect the virtual file tree and event log.
 - Offline demo runs locally without API requests or Pollen spend.
-- Live mode uses the official Pollinations Connect / BYOP widget and the user's approved budget.
+- Live mode uses Sign in with Pollinations (BYOP) and the user's approved budget.
 - Submission: pending for Quest #19179.
 
 ## Build, test, and deploy
@@ -61,9 +61,9 @@ node --test tests/smoke.test.js tests/after-hours.test.js
 
 ## Pollinations BYOP
 
-Each app uses the official Pollinations Connect UI. Users create their own publishable `pk_...` App Key, add the exact app URL as a Redirect URI, and approve their own scoped text-model access, budget and expiry. The scoped user key is held only for the browser session; neither app stores it in the source, URL, or analytics. No app request runs until the user explicitly connects and starts a live session.
+Signal Room and Machine Room use Sign in with Pollinations ([Bring your own Pollen](https://github.com/pollinations/pollinations/blob/main/BRING_YOUR_OWN_POLLEN.md)): visitors click one button and approve their own scoped text-model access, budget and expiry. To show the app's name on the consent screen, set `APP_KEY` to your own App Key, with the app URL as its Redirect URI. The scoped user key is held only for the browser session; neither app stores it in the source, URL, or analytics. No app request runs until the user explicitly connects and starts a live session.
 
-- Create an App Key: https://enter.pollinations.ai/keys?tab=app
+- Create an App Key (optional): https://enter.pollinations.ai/keys?tab=app
 - API model catalogue: `GET https://gen.pollinations.ai/v1/models`
 - Chat completions: `POST https://gen.pollinations.ai/v1/chat/completions`
 
